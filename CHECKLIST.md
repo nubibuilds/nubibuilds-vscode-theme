@@ -6,7 +6,7 @@ Status per 14 November 2026, versi 0.1.0.
 
 **Dua sumber `[x]`.** Pemeriksaan otomatis (`npm run check`) membuktikan empat hal: Color ID-nya ada di tema dan terdaftar di referensi resmi; warna dan gaya huruf tiap kategori syntax serta semantic sama dengan tabel spesifikasi; pasangan warna yang terdaftar memenuhi rasio kontras; dan semua nilai berasal dari palet. Hal yang hanya bisa dinilai dengan mata ditandai `[x]` berdasarkan **uji manual pemilik proyek pada 14 November 2026**: semua langkah T0–T14 di `TESTING.md` dijalankan di Extension Development Host untuk ketiga tema, dan dilaporkan tanpa temuan. Uji manual itu tidak dilakukan oleh Claude; yang dicatat di sini adalah laporan hasilnya.
 
-**Yang masih terbuka:** screenshot dokumentasi di luar sampul (T15); 64 Color ID milik UI baru yang dibiarkan default; `main` belum didorong ke GitHub; publisher belum dipastikan terdaftar di Marketplace, dan `package.json` masih `"private": true`. Lima item tetap `[~]` karena VS Code tidak menyediakan Color ID-nya atau memang tidak ada variannya: conditional breakpoint, logpoint, baris diff "diubah", date picker, dan High Contrast.
+**Yang masih terbuka:** screenshot dokumentasi di luar sampul (T15); 64 Color ID milik UI baru yang dibiarkan default; `main` belum didorong ke GitHub; ID publisher di Marketplace belum dipastikan (`package.json` memakai `nubibuilds`). Lima item tetap `[~]` karena VS Code tidak menyediakan Color ID-nya atau memang tidak ada variannya: conditional breakpoint, logpoint, baris diff "diubah", date picker, dan High Contrast.
 
 ## Tiga tema
 

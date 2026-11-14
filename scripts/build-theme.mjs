@@ -1106,6 +1106,10 @@ export const tokenRules = [
     'meta.embedded',
     'source.groovy.embedded',
     'meta.template.expression',
+    // The SQL grammar scopes every `a.b` reference (schema.table, alias.column)
+    // as a constant; treat both halves as plain identifiers.
+    'constant.other.database-name.sql',
+    'constant.other.table-name.sql',
   ]),
   rule('Parameters', p.hi, 'italic', ['variable.parameter', 'meta.parameter variable.other.readwrite']),
   rule('Language variables (this, self, super)', p.violet, 'italic', [
@@ -1179,7 +1183,6 @@ export const tokenRules = [
     'storage.type.generic.java',
     'storage.type.object.array.java',
     'support.class.php',
-    'constant.other.table-name.sql',
     'entity.name.type.anchor.yaml',
     'variable.other.alias.yaml',
   ]),

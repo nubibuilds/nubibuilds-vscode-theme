@@ -4,6 +4,11 @@
   "description": "Green-phosphor terminal dark themes: one green accent and four supporting colours, each with a fixed job. Three background treatments.",
   "version": "0.1.0",
   "publisher": "nubibuilds",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nubibuilds/nubibuilds-vscode-theme.git"
+  },
   "private": true,
   "engines": {
     "vscode": "^1.90.0"
@@ -42,6 +47,6 @@
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:coverage": "node scripts/check-coverage.mjs",
     "check": "node scripts/check-contrast.mjs && node scripts/check-coverage.mjs",
-    "package": "npm run build && npm run check && npx --yes @vscode/vsce package --allow-missing-repository --skip-license"
+    "package": "npm run build && npm run check && npx --yes @vscode/vsce package"
   }
 }

@@ -6,7 +6,7 @@ Status per 14 November 2026, versi 0.1.0.
 
 **Dua sumber `[x]`.** Pemeriksaan otomatis (`npm run check`) membuktikan empat hal: Color ID-nya ada di tema dan terdaftar di referensi resmi; warna dan gaya huruf tiap kategori syntax serta semantic sama dengan tabel spesifikasi; pasangan warna yang terdaftar memenuhi rasio kontras; dan semua nilai berasal dari palet. Hal yang hanya bisa dinilai dengan mata ditandai `[x]` berdasarkan **uji manual pemilik proyek pada 14 November 2026**: semua langkah T0–T14 di `TESTING.md` dijalankan di Extension Development Host untuk ketiga tema, dan dilaporkan tanpa temuan. Uji manual itu tidak dilakukan oleh Claude; yang dicatat di sini adalah laporan hasilnya.
 
-**Yang masih terbuka:** screenshot dokumentasi (T15); 64 Color ID milik UI baru yang dibiarkan default; lisensi, `repository` dan publisher di `package.json`. Lima item tetap `[~]` karena VS Code tidak menyediakan Color ID-nya atau memang tidak ada variannya: conditional breakpoint, logpoint, baris diff "diubah", date picker, dan High Contrast.
+**Yang masih terbuka:** screenshot dokumentasi di luar sampul (T15); 64 Color ID milik UI baru yang dibiarkan default; `main` belum didorong ke GitHub; publisher belum dipastikan terdaftar di Marketplace, dan `package.json` masih `"private": true`. Lima item tetap `[~]` karena VS Code tidak menyediakan Color ID-nya atau memang tidak ada variannya: conditional breakpoint, logpoint, baris diff "diubah", date picker, dan High Contrast.
 
 ## Tiga tema
 
@@ -438,9 +438,9 @@ Kriteria:
 - [x] Terminal diuji dengan 16 warna ANSI → T6
 - [x] Explorer, Source Control, Search, Debug dan Problems diuji → T2, T7, T8, T9, T10
 - [x] Popup, dialog, hover, selection dan focus diuji → T11, T12, T14
-- [ ] Screenshot dokumentasi dibuat untuk area utama → T15
+- [~] Screenshot dokumentasi dibuat untuk area utama → T15. **Sebagian:** `images/NubiBuilds_Cover.png` (dibuat pemilik proyek) memuat tangkapan layar asli editor dan Explorer untuk ketiga tema, dan menjadi sampul `README.md`. Terminal, Source Control, debug, Command Palette dan diff belum punya tangkapan layar. Selain itu `images/` berisi 22 gambar pratinjau hasil render (20 bahasa di NubiBuilds Dark, ditambah TypeScript di Void dan Float), dibuat dari grammar TextMate bawaan VS Code dan warna tema. Itu bukan tangkapan layar jendela VS Code: tidak memuat semantic highlighting, warna pasangan kurung, maupun workbench (Explorer, terminal, debug, Command Palette, diff). MDX tidak dirender karena VS Code tidak punya grammar bawaannya. Gambar pratinjau itu ada di `images/README.md`, belum di `README.md`
 - [x] README menjelaskan tema dan cara mengaktifkannya
-- [x] Pengemasan VSIX berhasil: `nubibuilds-dark-0.1.0.vsix` (31,2 KB, 8 file, tiga tema), dengan `--allow-missing-repository --skip-license` karena `package.json` belum punya `repository` dan proyek belum punya `LICENSE`
+- [x] Pengemasan VSIX berhasil: `nubibuilds-dark-0.1.0.vsix` (31,2 KB, 8 file, tiga tema), tanpa flag pengecualian. `package.json` punya `repository` (GitHub) dan lisensi MIT (`LICENSE`, field `license`)
 - [x] Extension diuji melalui Extension Development Host → T0
 - [x] Batasan UI extension/webview didokumentasikan
 

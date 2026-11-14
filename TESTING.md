@@ -301,4 +301,4 @@ Tidak ada date picker bawaan di VS Code, jadi item itu tidak bisa diuji.
 1. Ambil screenshot untuk: editor dengan `sample.ts`, Explorer + Source Control (T9), terminal dengan `ansi.sh`, sesi debug, Command Palette, diff editor. Simpan di folder `images/` dan rujuk dari `README.md`.
 2. Kemas: `npm run package` → `nubibuilds-dark-0.1.0.vsix`.
 3. Kalau ingin memasang ke VS Code utama: `code --install-extension nubibuilds-dark-0.1.0.vsix`. Untuk mencopot: `code --uninstall-extension nubibuilds.nubibuilds-dark`.
-4. Sebelum dipublikasikan, `package.json` masih perlu `repository`, lisensi (`LICENSE` + field `license`), dan `publisher` yang terdaftar; hapus `"private": true`.
+4. Sebelum dipublikasikan: dorong `main` ke GitHub (gambar di `README.md` dirujuk lewat URL repo, jadi baru tampil setelah ada di sana dan repo-nya publik), pastikan `publisher` terdaftar di Marketplace, dan hapus `"private": true` dari `package.json`. Galeri di `images/README.md` boleh dipindahkan ke `README.md`.

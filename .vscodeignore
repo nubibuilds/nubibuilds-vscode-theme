@@ -1,6 +1,7 @@
 .vscode/**
 scripts/**
 samples/**
+images/**
 node_modules/**
 CHECKLIST.md
 TESTING.md

@@ -1,5 +1,7 @@
 # NubiBuilds Dark
 
+![NubiBuilds: a calm, green-tinted dark theme for VS Code, shown in its Dark, Dark Float and Dark Void variants](images/NubiBuilds_Cover.png)
+
 A dark colour theme for Visual Studio Code with a green-phosphor terminal look:
 a green-tinted dark background, one green accent, and four supporting colours
 that each have a fixed job.

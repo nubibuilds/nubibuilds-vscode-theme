@@ -907,7 +907,9 @@
         "punctuation.definition.variable",
         "meta.embedded",
         "source.groovy.embedded",
-        "meta.template.expression"
+        "meta.template.expression",
+        "constant.other.database-name.sql",
+        "constant.other.table-name.sql"
       ],
       "settings": {
         "foreground": "#cfdad2",
@@ -1049,7 +1051,6 @@
         "storage.type.generic.java",
         "storage.type.object.array.java",
         "support.class.php",
-        "constant.other.table-name.sql",
         "entity.name.type.anchor.yaml",
         "variable.other.alias.yaml"
       ],

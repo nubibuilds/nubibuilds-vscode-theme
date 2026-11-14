@@ -1,0 +1,86 @@
+@use 'sass:math';
+@use 'sass:map';
+@import 'tokens';
+
+// Palette
+$bg: #0a0e0b;
+$accent: #62f08f !default;
+$breakpoints: (
+  'sm': 30em,
+  'md': 48em,
+  'lg': 64em,
+);
+$base-size: 16px;
+
+/// Convert a pixel value to rem.
+/// @param {Number} $px - Value in pixels.
+/// @return {Number} Value in rem.
+@function rem($px) {
+  @return math.div($px, $base-size) * 1rem;
+}
+
+@mixin respond($name) {
+  @if map.has-key($breakpoints, $name) {
+    @media (min-width: map.get($breakpoints, $name)) {
+      @content;
+    }
+  } @else {
+    @warn 'Unknown breakpoint: #{$name}';
+  }
+}
+
+%surface {
+  background: lighten($bg, 3%);
+  border: 1px solid rgba($accent, 0.2);
+  border-radius: rem(6px);
+}
+
+.button {
+  @extend %surface;
+  display: inline-flex;
+  padding: rem(8px) rem(16px);
+  color: $accent;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: darken($accent, 40%);
+  }
+
+  &--primary {
+    background: $accent;
+    color: $bg;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .icon + & {
+    margin-left: rem(4px);
+  }
+
+  @include respond('md') {
+    padding: rem(12px) rem(24px);
+  }
+}
+
+@each $name, $width in $breakpoints {
+  .container--#{$name} {
+    max-width: $width;
+    margin-inline: auto;
+  }
+}
+
+@for $i from 1 through 4 {
+  .gap-#{$i} {
+    gap: rem($i * 4px);
+  }
+}
+
+#sidebar > nav a.active::before {
+  content: '\25B8';
+  color: $accent;
+}

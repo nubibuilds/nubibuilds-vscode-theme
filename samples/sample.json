@@ -1,0 +1,39 @@
+{
+  "name": "inventory-service",
+  "version": "2.4.1",
+  "private": true,
+  "description": "Sample JSON with nested objects, arrays and every value type.",
+  "homepage": "https://example.com/inventory?ref=docs",
+  "port": 8080,
+  "ratio": -0.375,
+  "exponent": 1.5e10,
+  "enabled": true,
+  "debug": false,
+  "owner": null,
+  "tags": ["api", "internal", "v2"],
+  "escapes": "tab\there, quote \" and unicode █",
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "pool": {
+      "min": 2,
+      "max": 10,
+      "idleTimeoutMs": 30000
+    },
+    "replicas": [
+      { "host": "replica-1.internal", "readonly": true },
+      { "host": "replica-2.internal", "readonly": true }
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "matrix": [
+    [1, 2, 3],
+    [4, 5, 6]
+  ],
+  "empty": {},
+  "none": []
+}

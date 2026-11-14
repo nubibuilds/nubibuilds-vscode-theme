@@ -1,0 +1,32 @@
+// JSON with comments: the format VS Code uses for settings.
+{
+  /*
+   * Editor settings
+   */
+  "editor.fontFamily": "'JetBrains Mono', monospace",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
+  "editor.rulers": [80, 120], // two rulers
+  "editor.bracketPairColorization.enabled": true,
+  "editor.semanticHighlighting.enabled": true,
+  "editor.renderWhitespace": "boundary",
+
+  // Workbench
+  "workbench.colorTheme": "NubiBuilds Dark",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.colorCustomizations": {
+    "[NubiBuilds Dark]": {
+      "editor.selectionBackground": "#62f08f26"
+    }
+  },
+
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.git": false
+  },
+  "terminal.integrated.minimumContrastRatio": 4.5,
+  "search.exclude": null, // trailing comma below is allowed in JSONC
+  "[markdown]": {
+    "editor.wordWrap": "on",
+  },
+}

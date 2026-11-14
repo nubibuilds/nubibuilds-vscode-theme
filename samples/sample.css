@@ -1,0 +1,106 @@
+@charset "utf-8";
+@import url('https://fonts.example.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* Design tokens */
+:root {
+  --bg: #0a0e0b;
+  --fg: #cfdad2;
+  --accent: #62f08f;
+  --radius: 6px;
+  --shadow: 0 8px 24px rgb(0 0 0 / 50%);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg) linear-gradient(180deg, transparent 0%, rgba(98, 240, 143, 0.04) 100%);
+  color: var(--fg);
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  line-height: 1.6;
+}
+
+a:link,
+a:visited {
+  color: hsl(200 100% 75%);
+  text-underline-offset: 0.2em;
+}
+
+a:hover,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+#hero > h1.title {
+  font-size: clamp(1.75rem, 2vw + 1rem, 3rem);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.card,
+.card[data-state='open'] {
+  position: relative;
+  padding: calc(var(--radius) * 2) 1.25rem;
+  border: 1px solid #223027;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 150ms ease-out, border-color 150ms;
+}
+
+.card:not(.card--flat):hover {
+  transform: translateY(-2px) scale(1.01);
+  border-color: var(--accent) !important;
+}
+
+ul.list > li:nth-child(2n + 1)::marker {
+  content: '> ';
+  color: #f0b45a;
+}
+
+input[type='search']::placeholder {
+  color: #6f8375;
+  opacity: 1;
+}
+
+@media (min-width: 48em) and (prefers-reduced-motion: no-preference) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem 2rem;
+  }
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  .overlay {
+    backdrop-filter: blur(8px) saturate(120%);
+  }
+}
+
+@keyframes blink {
+  from,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  to {
+    opacity: 0;
+  }
+}
+
+@font-face {
+  font-family: 'Phosphor';
+  src: url('/fonts/phosphor.woff2') format('woff2');
+  font-display: swap;
+}

@@ -1,0 +1,37 @@
+{
+  "name": "nubibuilds-dark",
+  "displayName": "NubiBuilds Dark",
+  "description": "A green-phosphor terminal dark theme: one green accent and four supporting colours, each with a fixed job.",
+  "version": "0.1.0",
+  "publisher": "nubibuilds",
+  "private": true,
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "theme",
+    "dark",
+    "green",
+    "terminal",
+    "phosphor"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "NubiBuilds Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/nubibuilds-dark-color-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node scripts/build-theme.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:coverage": "node scripts/check-coverage.mjs",
+    "check": "node scripts/check-contrast.mjs && node scripts/check-coverage.mjs",
+    "package": "npm run build && npm run check && npx --yes @vscode/vsce package --allow-missing-repository --skip-license"
+  }
+}

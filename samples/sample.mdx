@@ -1,0 +1,48 @@
+---
+title: Theming notes
+date: 2026-11-14
+draft: false
+tags: [vscode, theme]
+---
+
+import { Callout } from '../components/Callout';
+import Chart from '../components/Chart.jsx';
+
+export const meta = { author: 'NubiBuilds', readingTime: 4 };
+export const palette = ['#62f08f', '#f0b45a', '#7fd4ff'];
+
+# {frontmatter.title}
+
+MDX mixes **Markdown**, *JSX* and `inline code` in one file. Written by {meta.author},
+about {meta.readingTime} minutes to read.
+
+<Callout type="warning" title="Heads up" dismissible>
+  Components can wrap **Markdown** content, including [links](https://mdxjs.com).
+</Callout>
+
+## Embedded expressions
+
+There are {palette.length} accent colours: {palette.map((hex) => hex.toUpperCase()).join(', ')}.
+
+<Chart
+  data={[3, 1, 4, 1, 5, 9]}
+  color={palette[0]}
+  height={240}
+  onHover={(point) => console.log(`value: ${point.y}`)}
+/>
+
+{/* An MDX comment */}
+
+- A list item with a <kbd>Ctrl</kbd> + <kbd>K</kbd> shortcut
+- Another with an expression: {1 + 1 === 2 ? 'yes' : 'no'}
+
+> Quotes still work, and so do fenced blocks:
+
+```js
+const sum = (a, b) => a + b;
+```
+
+<div className="grid" style={{ display: 'grid', gap: 16 }}>
+  <section id="left">Left column</section>
+  <section id="right">Right column</section>
+</div>

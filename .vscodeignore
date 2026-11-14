@@ -1,0 +1,9 @@
+.vscode/**
+scripts/**
+samples/**
+node_modules/**
+CHECKLIST.md
+TESTING.md
+.gitignore
+**/*.vsix
+**/.DS_Store

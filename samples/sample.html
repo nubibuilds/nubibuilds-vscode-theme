@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NubiBuilds &mdash; sample page</title>
+    <link rel="stylesheet" href="./sample.css" />
+    <style>
+      :root {
+        --accent: #62f08f;
+        --gap: 1.5rem;
+      }
+
+      body > main.container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+        gap: var(--gap);
+        font: 400 1rem/1.6 'JetBrains Mono', ui-monospace, monospace;
+      }
+
+      #hero h1::after {
+        content: '\2588';
+        color: var(--accent);
+        animation: blink 1s steps(2) infinite;
+      }
+
+      @media (max-width: 40em) {
+        nav a:not(.active):hover {
+          text-decoration: underline !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="page page--home">
+    <!-- Navigation -->
+    <nav aria-label="Primary">
+      <a class="active" href="/">Home</a>
+      <a href="/projects?sort=recent&amp;page=2">Projects</a>
+      <a href="https://example.com" target="_blank" rel="noopener noreferrer">External</a>
+    </nav>
+
+    <main class="container">
+      <section id="hero">
+        <h1>Build log</h1>
+        <p>Latest entries, <em>newest first</em>. Press <kbd>/</kbd> to search.</p>
+        <form action="/search" method="get">
+          <label for="q">Search</label>
+          <input id="q" name="q" type="search" placeholder="Type to filter" required minlength="2" />
+          <button type="submit" disabled>Go</button>
+        </form>
+      </section>
+
+      <table>
+        <thead>
+          <tr><th scope="col">Date</th><th scope="col">Entry</th></tr>
+        </thead>
+        <tbody id="entries"></tbody>
+      </table>
+      <img src="/img/terminal.png" alt="A green terminal" width="640" height="360" loading="lazy" />
+    </main>
+
+    <script type="module">
+      const entries = [
+        { date: '2026-11-01', title: 'Palette locked', done: true },
+        { date: '2026-11-08', title: 'Syntax pass', done: false },
+      ];
+
+      const tbody = document.querySelector('#entries');
+      for (const { date, title, done } of entries) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${date}</td><td class="${done ? 'done' : ''}">${title}</td>`;
+        tbody?.append(row);
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === '/' && !/input|textarea/i.test(event.target.tagName)) {
+          event.preventDefault();
+          document.getElementById('q').focus();
+        }
+      });
+    </script>
+  </body>
+</html>

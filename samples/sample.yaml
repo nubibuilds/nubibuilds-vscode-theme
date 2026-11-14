@@ -1,0 +1,65 @@
+%YAML 1.2
+---
+# CI pipeline: exercises most YAML token categories.
+name: build-and-test
+version: 2.4
+enabled: true
+legacy: no
+owner: ~
+timeout: 30m
+released: 2026-11-14T08:30:00Z
+
+defaults: &defaults
+  runs-on: ubuntu-latest
+  retries: 3
+  env:
+    NODE_ENV: test
+    CI: "true"
+    PORT: 8080
+
+on:
+  push:
+    branches: [main, "release/**"]
+    tags: ['v*.*.*']
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  lint:
+    <<: *defaults
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: npm ci --ignore-scripts
+      - name: Lint
+        run: |
+          npm run build
+          npm run check -- --max-warnings=0
+  test:
+    <<: *defaults
+    needs: [lint]
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Run tests
+        run: >
+          node --test
+          --experimental-test-coverage
+        env:
+          TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Report
+        if: ${{ failure() && github.event_name == 'push' }}
+        with:
+          message: "Build #${{ github.run_number }} failed\n"
+          ratio: !!float 0.75
+          binary: !!binary R0lGODlhAQABAAAAACw=
+...
+---
+second: document
+list:
+  - plain scalar
+  - 'single ''quoted'''
+  - {inline: map, count: 2}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="inventory.xsl"?>
+<!DOCTYPE inventory [
+  <!ENTITY company "NubiBuilds">
+  <!ELEMENT inventory (product+)>
+]>
+<!-- Inventory export: exercises most XML token categories. -->
+<inv:inventory
+    xmlns:inv="https://example.com/schema/inventory"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://example.com/schema/inventory inventory.xsd"
+    generated="2026-11-14T08:30:00Z"
+    count="2">
+
+  <inv:meta>
+    <inv:owner>&company;</inv:owner>
+    <inv:note>Prices include tax &amp; shipping &#8212; see &lt;terms&gt;.</inv:note>
+  </inv:meta>
+
+  <inv:product sku="ABC-1234" status="active" featured="true">
+    <inv:name xml:lang="en">Widget</inv:name>
+    <inv:price currency="IDR">99500.00</inv:price>
+    <inv:tags>
+      <inv:tag>new</inv:tag>
+      <inv:tag>hardware</inv:tag>
+    </inv:tags>
+    <inv:description><![CDATA[
+      Raw <b>markup</b> & symbols are allowed in here.
+    ]]></inv:description>
+  </inv:product>
+
+  <inv:product sku="XYZ-0001" status="draft">
+    <inv:name xml:lang="id">Gawai</inv:name>
+    <inv:price currency="IDR">150000.00</inv:price>
+    <inv:tags/>
+    <inv:dimensions width="12.5" height="4" unit="cm"/>
+  </inv:product>
+</inv:inventory>

@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-11-14)
 
-First version, ready for manual testing in the Extension Development Host.
+First release.
 
 - Three dark themes from one palette: **NubiBuilds Dark**, **NubiBuilds Dark
   Void** (one flat background) and **NubiBuilds Dark Float** (lighter editor).

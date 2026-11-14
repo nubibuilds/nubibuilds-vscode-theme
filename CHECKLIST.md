@@ -2,9 +2,11 @@
 
 Status per 14 November 2026, versi 0.1.0.
 
-**Tanda:** `[x]` diimplementasikan **dan** lulus pemeriksaan otomatis · `[~]` diimplementasikan tetapi menunggu pemeriksaan visual, atau hanya didukung sebagian · `[ ]` belum.
+**Tanda:** `[x]` diimplementasikan, lulus pemeriksaan otomatis, dan (untuk hal yang hanya bisa dinilai dengan mata) lulus uji manual · `[~]` hanya didukung sebagian, atau masih ada keputusan terbuka · `[ ]` belum.
 
-**Apa arti `[x]` di sini.** Pemeriksaan otomatis membuktikan empat hal: Color ID-nya ada di tema dan terdaftar di referensi resmi; warna dan gaya huruf tiap kategori syntax serta semantic sama dengan tabel spesifikasi; pasangan warna yang terdaftar memenuhi rasio kontras; dan semua nilai berasal dari palet. Pemeriksaan itu **tidak** membuktikan bahwa hasilnya enak dilihat atau bahwa VS Code benar-benar memakai tiap ID seperti yang diharapkan. Belum ada satu pun bagian yang dilihat dengan mata di Extension Development Host. Karena itu semua baris **Kriteria** yang bersifat visual bertanda `[~]` dan merujuk langkah di `TESTING.md`.
+**Dua sumber `[x]`.** Pemeriksaan otomatis (`npm run check`) membuktikan empat hal: Color ID-nya ada di tema dan terdaftar di referensi resmi; warna dan gaya huruf tiap kategori syntax serta semantic sama dengan tabel spesifikasi; pasangan warna yang terdaftar memenuhi rasio kontras; dan semua nilai berasal dari palet. Hal yang hanya bisa dinilai dengan mata ditandai `[x]` berdasarkan **uji manual pemilik proyek pada 14 November 2026**: semua langkah T0–T14 di `TESTING.md` dijalankan di Extension Development Host untuk ketiga tema, dan dilaporkan tanpa temuan. Uji manual itu tidak dilakukan oleh Claude; yang dicatat di sini adalah laporan hasilnya.
+
+**Yang masih terbuka:** screenshot dokumentasi (T15); 64 Color ID milik UI baru yang dibiarkan default; lisensi, `repository` dan publisher di `package.json`. Lima item tetap `[~]` karena VS Code tidak menyediakan Color ID-nya atau memang tidak ada variannya: conditional breakpoint, logpoint, baris diff "diubah", date picker, dan High Contrast.
 
 ## Tiga tema
 
@@ -38,7 +40,7 @@ Seleksi direncanakan 12%, tetapi setelah dibulatkan ke byte hex hasilnya 4,49:1,
 
 `npm run check` menjalankan kedua pemeriksaan untuk ketiga tema dan gagal kalau salah satunya gagal. Hasil saat ini: ketiganya lulus, 0 kegagalan. Pasangan teks terendah di Float: `dim` di atas sorotan simbol pada baris aktif, 4,51:1.
 
-Belum satu pun dari ketiga tema dinilai tuntas dengan mata. Semua langkah `TESTING.md` berlaku untuk tiap tema; untuk Void dan Float cukup ulangi T1, T3, T6, T8 dan T9, karena hanya latar dan sorotan yang berbeda.
+Ketiga tema sudah diuji manual dengan seluruh langkah `TESTING.md` (T0–T14) dan dilaporkan tanpa temuan.
 
 ## Ringkasan pemeriksaan otomatis (NubiBuilds Dark)
 
@@ -68,7 +70,7 @@ Yang tidak diverifikasi adalah perilaku tiap ID di VS Code yang terpasang (1.146
 | `borderStrong` | `#4a6a56` | `#4f715c` | Border tombol sekunder di atas latar `hover` hanya 2,86:1. Sekarang 3,16:1 |
 | Seleksi editor | ~18% | 15% | Pada 18%, komentar di atas seleksi pada baris aktif (`surface`) turun di bawah 4,5:1 |
 | Match pencarian (lainnya) | ~20% | 10% | Diturunkan supaya tetap berjarak dari match aktif, yang harus turun (baris berikut) |
-| Match pencarian (aktif) | ~32% | 17% + border `amber` penuh | Pada 32%, `dim` hanya sekitar 3,3:1. Pembeda dari match lain sekarang terutama border penuh, bukan alpha. **Ini penyimpangan terbesar dari nilai awal; periksa di T8** |
+| Match pencarian (aktif) | ~32% | 17% + border `amber` penuh | Pada 32%, `dim` hanya sekitar 3,3:1. Pembeda dari match lain sekarang terutama border penuh, bukan alpha. Ini penyimpangan terbesar dari nilai awal; diterima pada uji manual (T8) |
 | Baris diff ditambah / dihapus | ~14% | 9% baris + 6% kata | Sorotan kata menumpuk di atas sorotan baris. Gabungan keduanya yang harus lolos 4,5:1 |
 | Baris eksekusi debug | ~18% | 16% | 18% memberi 4,44:1 untuk `dim` pada baris aktif |
 | Seleksi tidak aktif, sorotan kata | 10%, 12% | tidak berubah | – |
@@ -117,26 +119,26 @@ Daftar lengkapnya dicetak oleh `npm run check:coverage`.
 Kriteria:
 
 - [x] Kontras latar dan teks memadai (semua pasangan teks workbench ≥ 4,5:1)
-- [~] Indikator aktif jelas → T1 (kontras garis indikator ≥ 3:1 sudah lulus)
-- [~] Ikon dan badge terbaca → T1 (teks badge 13,3:1 sudah lulus)
-- [~] Hover, focus dan active bisa dibedakan → T1
-- [~] Header dan border konsisten → T1
-- [~] Pemisahan sidebar dari editor jelas → T1. Catatan: `line` terhadap `bg` hanya 1,4:1 dan `surface` terhadap `bg` hampir sama; ini sesuai spesifikasi ("pemisah dekoratif"), tetapi paling berisiko terlihat lemah
-- [~] Tab aktif berbeda jelas dari yang tidak aktif → T1
-- [~] Status debugging berbeda dari normal → T10 (latar `amber`, sudah lulus kontras)
-- [~] Error, warning dan informasi tidak hanya dibedakan lewat warna → T7, T14 (ikon dan squiggle milik VS Code; tema tidak bisa menjaminnya)
+- [x] Indikator aktif jelas → T1 (kontras garis indikator ≥ 3:1 sudah lulus)
+- [x] Ikon dan badge terbaca → T1 (teks badge 13,3:1 sudah lulus)
+- [x] Hover, focus dan active bisa dibedakan → T1
+- [x] Header dan border konsisten → T1
+- [x] Pemisahan sidebar dari editor jelas → T1. Catatan: `line` terhadap `bg` hanya 1,4:1 dan `surface` terhadap `bg` hampir sama; ini sesuai spesifikasi ("pemisah dekoratif"), dan diterima pada uji manual
+- [x] Tab aktif berbeda jelas dari yang tidak aktif → T1
+- [x] Status debugging berbeda dari normal → T10 (latar `amber`, sudah lulus kontras)
+- [x] Error, warning dan informasi tidak hanya dibedakan lewat warna → T7, T14 (ikon dan squiggle milik VS Code; tema tidak bisa menjaminnya)
 
 ## 2. File Explorer
 
 - [x] Latar dan teks Explorer: `sideBar.background`, `sideBar.foreground`
 - [x] Root workspace/folder: `sideBarSectionHeader.*`
 - [x] Nama folder dan file: `sideBar.foreground`, `list.*`
-- [~] Folder expanded dan collapsed: panah memakai `icon.foreground`; ikon folder berasal dari file icon theme, bukan dari tema warna → T2
+- [x] Folder expanded dan collapsed: panah memakai `icon.foreground`; ikon folder berasal dari file icon theme, bukan dari tema warna → T2
 - [x] Selected item: `list.activeSelectionBackground`, `.activeSelectionForeground`, `.activeSelectionIconForeground`, `list.inactiveSelection*`
 - [x] Focused item: `list.focusBackground`, `.focusForeground`, `.focusOutline`, `.focusAndSelectionOutline`, `.inactiveFocusOutline`
 - [x] Hover state: `list.hoverBackground`, `.hoverForeground`
 - [x] Active/open file: state selection di atas
-- [~] File modified (belum disimpan): Explorer tidak menandainya; tandanya ada di tab (`tab.activeModifiedBorder`, titik) dan di Open Editors → T1
+- [x] File modified (belum disimpan): Explorer tidak menandainya; tandanya ada di tab (`tab.activeModifiedBorder`, titik) dan di Open Editors → T1
 - [x] File decorations: `list.errorForeground`, `list.warningForeground`, `gitDecoration.*`
 - [x] Indentation guides: `tree.indentGuidesStroke` (aktif, `borderStrong`), `tree.inactiveIndentGuidesStroke` (`line`)
 - [x] Context menu: `menu.background`, `.foreground`, `.selectionBackground`, `.selectionForeground`, `.separatorBackground`, `.border`
@@ -147,11 +149,11 @@ Kriteria:
 
 Kriteria:
 
-- [~] Struktur folder mudah dipindai → T2
-- [~] Selected, focused dan hovered bisa dibedakan → T2
-- [~] Status file mudah dikenali → T2, T9
-- [~] Indentation guides terlihat tanpa mengganggu teks → T2
-- [~] Ikon dan teks terbaca di tiap tingkat nesting → T2
+- [x] Struktur folder mudah dipindai → T2
+- [x] Selected, focused dan hovered bisa dibedakan → T2
+- [x] Status file mudah dikenali → T2, T9
+- [x] Indentation guides terlihat tanpa mengganggu teks → T2
+- [x] Ikon dan teks terbaca di tiap tingkat nesting → T2
 
 ## 3. Editor
 
@@ -183,12 +185,12 @@ Catatan: `editor.foldBackground` tidak boleh buram, jadi dipakai `line` 42%, yan
 
 Kriteria:
 
-- [~] Teks, baris aktif, nomor baris dan kursor jelas → T3
-- [~] Seleksi tidak menghilangkan keterbacaan syntax → T3 (angka: semua warna syntax ≥ 4,5:1 di atas seleksi, termasuk pada baris aktif). Satu kasus tidak dipaksakan: sorotan kata **ditumpuk** dengan seleksi pada baris aktif memberi `dim` 3,39:1; ini hanya mengenai komentar yang sekaligus tersorot dan terseleksi
-- [~] Bracket pasangan mudah ditemukan → T3
-- [~] Error, warning, breakpoint dan perubahan Git bisa dibedakan → T3, T9, T10
-- [~] Minimap, scrollbar dan overview ruler tidak mendominasi → T3
-- [~] Diff dan merge membedakan perubahan dengan jelas → T9. Risiko: alpha diff diturunkan ke 9% + 6% demi kontras; bisa terasa terlalu samar
+- [x] Teks, baris aktif, nomor baris dan kursor jelas → T3
+- [x] Seleksi tidak menghilangkan keterbacaan syntax → T3 (angka: semua warna syntax ≥ 4,5:1 di atas seleksi, termasuk pada baris aktif). Satu kasus tidak dipaksakan: sorotan kata **ditumpuk** dengan seleksi pada baris aktif memberi `dim` 3,39:1; ini hanya mengenai komentar yang sekaligus tersorot dan terseleksi
+- [x] Bracket pasangan mudah ditemukan → T3
+- [x] Error, warning, breakpoint dan perubahan Git bisa dibedakan → T3, T9, T10
+- [x] Minimap, scrollbar dan overview ruler tidak mendominasi → T3
+- [x] Diff dan merge membedakan perubahan dengan jelas → T9. Alpha diff diturunkan ke 9% + 6% demi kontras (7% + 5% di Float); diterima pada uji manual
 
 ## 4. Syntax highlighting
 
@@ -216,19 +218,19 @@ Keputusan yang perlu diketahui:
 - `invalid.deprecated` hanya diberi coretan; warnanya tetap warna asal.
 - Tanda `$` pada variabel PHP dan shell diberi warna variabel, bukan warna tanda baca.
 
-Bahasa uji: file contoh ada untuk semuanya, tetapi **belum satu pun dilihat di editor**.
+Bahasa uji: file contoh ada untuk semuanya dan sudah dilihat di editor (T4).
 
-- [~] TypeScript (`sample.ts`) · [~] JavaScript (`sample.js`) · [~] TSX dan JSX (`sample.tsx`, `sample.jsx`) · [~] HTML (`sample.html`) · [~] CSS dan SCSS · [~] JSON dan JSONC · [~] Markdown dan MDX · [~] Python · [~] Java (`Sample.java`) · [~] Go · [~] Rust · [~] PHP · [~] SQL · [~] YAML · [~] XML · [~] Shell/Bash · [~] Dockerfile → semuanya T4
+- [x] TypeScript (`sample.ts`) · [x] JavaScript (`sample.js`) · [x] TSX dan JSX (`sample.tsx`, `sample.jsx`) · [x] HTML (`sample.html`) · [x] CSS dan SCSS · [x] JSON dan JSONC · [x] Markdown dan MDX · [x] Python · [x] Java (`Sample.java`) · [x] Go · [x] Rust · [x] PHP · [x] SQL · [x] YAML · [x] XML · [x] Shell/Bash · [x] Dockerfile → semuanya T4
 
 MDX tidak punya grammar bawaan di VS Code; perlu extension MDX supaya `sample.mdx` diwarnai.
 
 Kriteria:
 
-- [~] Kategori utama konsisten dan mudah dibedakan → T4
-- [~] Terbaca pada kode padat dan bersarang → T4
+- [x] Kategori utama konsisten dan mudah dibedakan → T4
+- [x] Terbaca pada kode padat dan bersarang → T4
 - [x] Komentar, string, keyword, fungsi, tipe, properti dan variabel tidak mirip (ΔE terendah 21,2; minimum 12)
-- [~] Terbaca pada bahasa tertanam → T4 (`sample.html`, `sample.md`, `sample.php`)
-- [~] Warna tidak bergantung pada satu bahasa → T4. Risiko terbesar ada di sini: scope khusus bahasa (Go, Rust, PHP, SQL, YAML) saya tulis dari pengetahuan tentang grammar-nya, bukan dari hasil Inspect Tokens
+- [x] Terbaca pada bahasa tertanam → T4 (`sample.html`, `sample.md`, `sample.php`)
+- [x] Warna tidak bergantung pada satu bahasa → T4. Scope khusus bahasa (Go, Rust, PHP, SQL, YAML) ditulis dari pengetahuan tentang grammar-nya, bukan dari hasil Inspect Tokens; uji manual tidak menemukan token yang salah warna
 
 ## 5. Semantic highlighting
 
@@ -244,11 +246,11 @@ Tambahan untuk language server tertentu: `typeParameter`, `struct`, `typeAlias`,
 Kriteria:
 
 - [x] Melengkapi TextMate, bukan palet yang bertentangan (dibandingkan otomatis)
-- [~] Token dengan makna berbeda bisa dibedakan saat language server menyediakannya → T5
-- [~] Modifier diperlakukan konsisten → T5
-- [~] Fallback layak saat semantic highlighting tidak tersedia → T4, T5
+- [x] Token dengan makna berbeda bisa dibedakan saat language server menyediakannya → T5
+- [x] Modifier diperlakukan konsisten → T5
+- [x] Fallback layak saat semantic highlighting tidak tersedia → T4, T5
 
-Perbedaan yang disengaja: variabel `const` lokal di TypeScript berwarna teks biasa menurut TextMate (kecuali di deklarasinya) dan `orange` menurut semantic (`variable.readonly`). Itu mengikuti spesifikasi, tetapi membuat kode TypeScript jauh lebih banyak berwarna `orange` saat semantic menyala. Nilai sendiri di T5.
+Perbedaan yang disengaja: variabel `const` lokal di TypeScript berwarna teks biasa menurut TextMate (kecuali di deklarasinya) dan `orange` menurut semantic (`variable.readonly`). Itu mengikuti spesifikasi, tetapi membuat kode TypeScript jauh lebih banyak berwarna `orange` saat semantic menyala. Diterima pada uji manual (T5).
 
 ## 6. Terminal
 
@@ -261,9 +263,9 @@ Bright black sekarang `#768b7c` (lihat tabel perubahan). ANSI black `#223027` di
 Kriteria:
 
 - [x] 16 slot ANSI punya nilai yang disengaja
-- [~] Prompt, output dan seleksi terbaca → T6
-- [~] Normal dan bright bisa dibedakan → T6
-- [ ] Diuji pada output error, log dan alat command-line → T6 (`samples/ansi.sh` sudah ada dan sudah dijalankan untuk memastikan skripnya benar, tetapi belum dilihat di terminal VS Code dengan tema ini)
+- [x] Prompt, output dan seleksi terbaca → T6
+- [x] Normal dan bright bisa dibedakan → T6
+- [x] Diuji pada output error, log dan alat command-line → T6 (`samples/ansi.sh` di terminal VS Code)
 
 ## 7. Panel dan output
 
@@ -272,14 +274,14 @@ Kriteria:
 - [x] Debug Console: `debugConsole.infoForeground`, `.warningForeground`, `.errorForeground`, `.sourceForeground`, `debugConsoleInputIcon.foreground`
 - [x] Terminal: bagian 6
 - [x] Ports: `ports.iconRunningProcessForeground`, `list.*`, `tree.table*`
-- [~] Test Results: `testing.*` ditetapkan, tetapi butuh extension penyedia tes untuk diuji → T7
+- [x] Test Results: `testing.*` ditetapkan, tetapi butuh extension penyedia tes untuk diuji → T7
 
 Kriteria:
 
-- [~] Latar dan teks konsisten → T7
-- [~] Error, warning, info dan success dikenali → T7
-- [~] Tab aktif dan tidak aktif berbeda → T1, T7
-- [~] Output panjang mudah dibaca → T7
+- [x] Latar dan teks konsisten → T7
+- [x] Error, warning, info dan success dikenali → T7
+- [x] Tab aktif dan tidak aktif berbeda → T1, T7
+- [x] Output panjang mudah dibaca → T7
 
 ## 8. Search & Replace
 
@@ -289,15 +291,15 @@ Kriteria:
 - [x] Match aktif: `editor.findMatchBackground`, `editor.findMatchBorder`
 - [x] Kontrol replace: `button.*`, `toolbar.*`, `inputOption.*`
 - [x] Dekorasi pencarian di editor: `editor.findRangeHighlightBackground`, `editorOverviewRuler.findMatchForeground`, `minimap.findMatchHighlight`
-- [~] Riwayat pencarian: tidak punya Color ID sendiri; isinya tampil di input yang sama → T8
+- [x] Riwayat pencarian: tidak punya Color ID sendiri; isinya tampil di input yang sama → T8
 - [x] **(tambahan)** `inputOption.activeBackground`, `.activeBorder`, `.activeForeground`, `.hoverBackground`; `inputValidation.{info,warning,error}{Background,Foreground,Border}`; placeholder `muted` (5,2:1 di atas latar input)
 
 Kriteria:
 
 - [x] Kontras input dan hasil memadai
-- [~] Match aktif berbeda dari lainnya → T8 (**perhatikan**: beda alpha kecil, 17% vs 10%; pembeda utamanya border penuh)
+- [x] Match aktif berbeda dari lainnya → T8 (beda alpha kecil, 17% vs 10%; pembeda utamanya border penuh)
 - [x] Sorotan terbaca di atas syntax (semua warna syntax ≥ 4,5:1 di atas kedua jenis match)
-- [~] Fokus pada input dan kontrol jelas → T8
+- [x] Fokus pada input dan kontrol jelas → T8
 
 ## 9. Source Control (Git)
 
@@ -312,10 +314,10 @@ Kriteria:
 
 Kriteria:
 
-- [~] Added, modified, deleted dan conflict bisa dibedakan → T9
+- [x] Added, modified, deleted dan conflict bisa dibedakan → T9
 - [x] Dekorasi konsisten antara Explorer, Source Control dan editor (warna yang sama dipakai untuk `gitDecoration.*`, `editorGutter.*`, `minimapGutter.*`, `editorOverviewRuler.*`); tampilannya → T9
 - [x] Diff tidak mengurangi keterbacaan kode (angka: ≥ 4,5:1 untuk baris + kata); kesan visual → T9
-- [~] Informasi perubahan tidak hanya lewat warna → T9 (huruf M/A/U/D/R dan coretan berasal dari VS Code)
+- [x] Informasi perubahan tidak hanya lewat warna → T9 (huruf M/A/U/D/R dan coretan berasal dari VS Code)
 
 `samples/git-states/setup.sh` sudah dijalankan di folder sementara dan menghasilkan semua status di atas.
 
@@ -334,10 +336,10 @@ Kriteria:
 
 Kriteria:
 
-- [~] Baris eksekusi jelas → T10
-- [~] Breakpoint dan conditional breakpoint mudah dibedakan → T10 (hanya lewat bentuk ikon)
-- [~] Nilai inline tidak mengaburkan kode → T10
-- [~] State debugging terlihat tanpa mengganggu status lain → T10
+- [x] Baris eksekusi jelas → T10
+- [x] Breakpoint dan conditional breakpoint mudah dibedakan → T10 (hanya lewat bentuk ikon)
+- [x] Nilai inline tidak mengaburkan kode → T10
+- [x] State debugging terlihat tanpa mengganggu status lain → T10
 
 ## 11. IntelliSense dan language widgets
 
@@ -353,49 +355,49 @@ Kriteria:
 
 Kriteria:
 
-- [~] Suggestion aktif jelas → T11
-- [~] Detail dokumentasi punya hierarki → T11
-- [~] Sorotan cocok tidak mengganggu → T11
-- [~] Widget terbaca di atas editor → T11 (kontras teks lulus; pemisahan dari kode bergantung pada border `line` dan bayangan)
+- [x] Suggestion aktif jelas → T11
+- [x] Detail dokumentasi punya hierarki → T11
+- [x] Sorotan cocok tidak mengganggu → T11
+- [x] Widget terbaca di atas editor → T11 (kontras teks lulus; pemisahan dari kode bergantung pada border `line` dan bayangan)
 
 ## 12. Dialogs, menus dan notifications
 
 - [x] Quick Input · [x] Quick Open · [x] Command Palette: `quickInput.*`, `quickInputTitle.background`, `quickInputList.*`, `pickerGroup.*`, `keybindingLabel.*`
 - [x] Context menus: `menu.*`
 - [x] Dropdowns: `dropdown.background`, `.listBackground`, `.foreground`, `.border`
-- [~] Modal dialogs · [~] Confirmation dialogs: dialog custom memakai `editorWidget.*`, `button.*`, `widget.shadow`. Di macOS dialog bawaannya native dan tidak dikendalikan tema → T12
+- [x] Modal dialogs · [x] Confirmation dialogs: dialog custom memakai `editorWidget.*`, `button.*`, `widget.shadow`. Di macOS dialog bawaannya native dan tidak dikendalikan tema → T12
 - [x] Input boxes: `input.*`, `inputValidation.*`
 - [x] Notification toast · [x] Notification center: bagian 1
 - [x] Progress indicators: `progressBar.background`
 
 Kriteria:
 
-- [~] Popup dan dialog terpisah dari konten di belakangnya → T12
-- [~] Item terpilih, hover dan focus jelas → T12
+- [x] Popup dan dialog terpisah dari konten di belakangnya → T12
+- [x] Item terpilih, hover dan focus jelas → T12
 - [x] Input, placeholder, label dan pesan validasi terbaca (kontras lulus); tampilan → T8, T12
-- [~] Tombol dan aksi destruktif dikenali → T12. VS Code tidak punya Color ID untuk tombol destruktif; pembedanya teks dan ikon dialog
+- [x] Tombol dan aksi destruktif dikenali → T12. VS Code tidak punya Color ID untuk tombol destruktif; pembedanya teks dan ikon dialog
 
 ## 13. Widgets dan specialized UI
 
 - [x] Breadcrumb picker: `breadcrumbPicker.background`
-- [~] Color picker: tidak ada Color ID khusus; mengikuti `editorHoverWidget.*` dan `editorWidget.*` → T13
+- [x] Color picker: tidak ada Color ID khusus; mengikuti `editorHoverWidget.*` dan `editorWidget.*` → T13
 - [~] Date picker: **tidak berlaku.** VS Code tidak punya date picker bawaan dan tidak ada Color ID-nya
 - [x] Tree view · [x] List view · [x] Table view: `list.*`, `tree.indentGuidesStroke`, `tree.inactiveIndentGuidesStroke`, `tree.tableColumnsBorder`, `tree.tableOddRowsBackground`
 - [x] Settings editor · [x] Settings search: `settings.*`
 - [x] Extension Marketplace · [x] Extension details: `extensionButton.*`, `extensionBadge.*`, `extensionIcon.*`
 - [x] Welcome/Get Started: `welcomePage.*`, `walkThrough.embeddedEditorBackground`, `walkthrough.stepTitle.foreground`
-- [~] Chat view: `chat.*`, `inlineChat.*`, `inlineChatInput.*` ditetapkan; ID `agents*` dibiarkan default (lihat tabel di atas) → T13
+- [x] Chat view: `chat.*`, `inlineChat.*`, `inlineChatInput.*` ditetapkan; ID `agents*` dibiarkan default (lihat tabel di atas) → T13
 - [x] Notebook/Jupyter · [x] Interactive Window: `notebook.*`, `notebookStatus*Icon.foreground`, `notebookScrollbarSlider.*`, `interactive.*`
 - [x] Testing view: `testing.icon*`, `testing.runAction`, `testing.peek*`, `testing.message.*`, `testing.covered*`, `testing.uncovered*`
 - [x] Timeline view: tidak punya ID sendiri; memakai `list.*`
-- [~] Webview / UI milik extension: **keterbatasan, bukan kegagalan.** Tema hanya menyediakan variabel CSS; extension menentukan sendiri pemakaiannya → T13
+- [x] Webview / UI milik extension: **keterbatasan, bukan kegagalan.** Tema hanya menyediakan variabel CSS; extension menentukan sendiri pemakaiannya → T13
 - [x] **(tambahan)** `charts.*`, `chart.*`, `gauge.*`, ikon hasil tes, `banner.*`, `keybindingTable.*`
 
 Kriteria:
 
-- [~] Komponen bawaan mengikuti palet → T13
-- [~] Tree, list, table dan settings punya state selection/focus yang jelas → T13
-- [ ] UI extension diuji representatif → T13
+- [x] Komponen bawaan mengikuti palet → T13
+- [x] Tree, list, table dan settings punya state selection/focus yang jelas → T13
+- [x] UI extension diuji representatif → T13
 - [x] Keterbatasan webview dicatat (di sini dan di `README.md`)
 
 ## 14. Accessibility dan visual states
@@ -418,35 +420,35 @@ Pengecualian kontras yang berlaku (dicetak oleh `npm run check:contrast`):
 
 Kriteria:
 
-- [~] Teks penting terbaca pada ukuran normal → T14 (angka lulus)
-- [~] Focus indicator jelas → T14
-- [~] Hover, focus, active, selected dan disabled tidak tertukar → T14
-- [~] Error, warning dan success tidak hanya lewat warna → T14
+- [x] Teks penting terbaca pada ukuran normal → T14 (angka lulus)
+- [x] Focus indicator jelas → T14
+- [x] Hover, focus, active, selected dan disabled tidak tertukar → T14
+- [x] Error, warning dan success tidak hanya lewat warna → T14
 - [x] Kontras diperiksa dengan alat
-- [~] Mode High Contrast tidak menghilangkan informasi → T14
+- [x] Mode High Contrast tidak menghilangkan informasi → T14
 
 ## 15. Final quality gates
 
-- [~] Semua kelompok prioritas utama diperiksa: hanya secara otomatis; pemeriksaan visual belum
+- [x] Semua kelompok prioritas utama diperiksa: otomatis dan manual
 - [x] Semua Color ID relevan dari dokumentasi resmi dipetakan: 837 dari 971; 134 sisanya dijelaskan di atas
 - [~] Tidak ada warna penting yang hanya mengandalkan default tanpa keputusan: keputusan untuk yang dibiarkan default sudah dicatat, tetapi 64 ID UI baru (`agents*`, `modern*`, dan sejenisnya) dibiarkan karena tidak bisa saya nilai, bukan karena sudah diputuskan warnanya
 - [ ] ~~Dark/light konsisten secara semantik~~ tidak berlaku: hanya varian gelap
-- [ ] Syntax diuji pada beberapa bahasa dan file nyata → T4 (file contoh sudah ada)
-- [ ] Semantic highlighting diuji dengan language server yang sesuai → T5
-- [ ] Terminal diuji dengan 16 warna ANSI → T6
-- [ ] Explorer, Source Control, Search, Debug dan Problems diuji → T2, T7, T8, T9, T10
-- [ ] Popup, dialog, hover, selection dan focus diuji → T11, T12, T14
+- [x] Syntax diuji pada beberapa bahasa dan file nyata → T4 (file contoh sudah ada)
+- [x] Semantic highlighting diuji dengan language server yang sesuai → T5
+- [x] Terminal diuji dengan 16 warna ANSI → T6
+- [x] Explorer, Source Control, Search, Debug dan Problems diuji → T2, T7, T8, T9, T10
+- [x] Popup, dialog, hover, selection dan focus diuji → T11, T12, T14
 - [ ] Screenshot dokumentasi dibuat untuk area utama → T15
 - [x] README menjelaskan tema dan cara mengaktifkannya
-- [x] Pengemasan VSIX berhasil: `nubibuilds-dark-0.1.0.vsix` (13,1 KB, 6 file), dengan `--allow-missing-repository --skip-license` karena `package.json` belum punya `repository` dan proyek belum punya `LICENSE`
-- [ ] Extension diuji melalui Extension Development Host → T0. `.vscode/launch.json` sudah ada, tetapi belum dijalankan
+- [x] Pengemasan VSIX berhasil: `nubibuilds-dark-0.1.0.vsix` (31,2 KB, 8 file, tiga tema), dengan `--allow-missing-repository --skip-license` karena `package.json` belum punya `repository` dan proyek belum punya `LICENSE`
+- [x] Extension diuji melalui Extension Development Host → T0
 - [x] Batasan UI extension/webview didokumentasikan
 
 Kriteria kelulusan rilis awal:
 
-1. [~] Workbench, Explorer, Editor, Syntax, Terminal dan Accessibility lulus pemeriksaan dasar: lulus pemeriksaan otomatis; pemeriksaan visual belum
-2. [~] Tidak ada teks atau kontrol penting yang sulit dibaca: angka lulus; mata belum
-3. [~] Hover, focus, active, selected, error dan warning dikenali
-4. [~] Syntax konsisten pada bahasa utama
-5. [ ] Pengujian dilakukan di Extension Development Host, bukan hanya dari inspeksi JSON
+1. [x] Workbench, Explorer, Editor, Syntax, Terminal dan Accessibility lulus pemeriksaan dasar: otomatis dan manual
+2. [x] Tidak ada teks atau kontrol penting yang sulit dibaca: angka lulus, uji manual tanpa temuan
+3. [x] Hover, focus, active, selected, error dan warning dikenali
+4. [x] Syntax konsisten pada bahasa utama
+5. [x] Pengujian dilakukan di Extension Development Host, bukan hanya dari inspeksi JSON
 6. [x] Keterbatasan extension/webview dicatat

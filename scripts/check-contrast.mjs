@@ -3,7 +3,23 @@
 // Exits non-zero when any requirement fails.
 
 import { readFileSync } from 'node:fs';
-import { palette as p, THEME_PATH } from './build-theme.mjs';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { palette as p, THEME_PATH, VARIANTS } from './build-theme.mjs';
+
+// Without NUBI_VARIANT, run this check once per theme and fail if any fails.
+if (!process.env.NUBI_VARIANT) {
+  let failed = false;
+  for (const variant of Object.keys(VARIANTS)) {
+    const result = spawnSync(process.execPath, [fileURLToPath(import.meta.url)], {
+      env: { ...process.env, NUBI_VARIANT: variant },
+      stdio: 'inherit',
+    });
+    if (result.status !== 0) failed = true;
+    console.log('');
+  }
+  process.exit(failed ? 1 : 0);
+}
 
 const theme = JSON.parse(readFileSync(THEME_PATH, 'utf8'));
 const C = theme.colors;
@@ -530,7 +546,7 @@ const fmt = (r) => `${r.value.toFixed(2).padStart(6)}  (min ${r.min})  ${r.label
 const groups = [...new Set(results.map((r) => r.group))];
 const failures = results.filter((r) => !r.pass);
 
-console.log('NubiBuilds Dark: contrast check\n');
+console.log(`${theme.name}: contrast check\n`);
 for (const g of groups) {
   const rs = results.filter((r) => r.group === g);
   const failed = rs.filter((r) => !r.pass);

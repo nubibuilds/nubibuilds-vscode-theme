@@ -4,8 +4,9 @@
 
 First version, ready for manual testing in the Extension Development Host.
 
-- One dark variant, **NubiBuilds Dark** (`vs-dark`).
-- Workbench colours for 837 colour IDs, all checked against the official Theme
+- Three dark themes from one palette: **NubiBuilds Dark**, **NubiBuilds Dark
+  Void** (one flat background) and **NubiBuilds Dark Float** (lighter editor).
+- Workbench colours for 837 colour IDs per theme, all checked against the official Theme
   Color Reference.
 - TextMate token rules and semantic token rules that share one palette.
 - All 16 ANSI terminal colours.

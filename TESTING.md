@@ -7,8 +7,8 @@ Nama warna (`accent`, `amber`, dan seterusnya) mengacu ke palet di `scripts/buil
 ## T0. Persiapan
 
 1. Di folder proyek, jalankan `npm run build && npm run check`. Keduanya harus selesai tanpa kegagalan.
-2. Buka folder proyek di VS Code, lalu tekan `F5` (konfigurasi **Run Extension**). Jendela baru bertajuk *Extension Development Host* terbuka pada folder `samples/`.
-3. Di jendela baru itu: `Cmd+Shift+P` → **Preferences: Color Theme** → **NubiBuilds Dark**.
+2. Buka folder proyek di VS Code, lalu pilih menu **Run > Start Debugging** (konfigurasi **Run Extension**). Tombolnya `F5`; di keyboard Mac tekan `Fn+F5`, karena `F5` saja membuka Dictation. Jendela baru bertajuk *Extension Development Host* terbuka pada folder `samples/`.
+3. Di jendela baru itu: `Cmd+Shift+P` → **Preferences: Color Theme** → **NubiBuilds Dark**. Ada tiga tema: **NubiBuilds Dark**, **NubiBuilds Dark Void** (semua area berlatar paling gelap) dan **NubiBuilds Dark Float** (editor lebih terang, sorotan lebih lemah). Di daftar itu, panah atas/bawah langsung mengganti tema tanpa Enter, jadi mudah dibandingkan. Jalankan semua langkah dengan NubiBuilds Dark; untuk Void dan Float cukup ulangi T1, T3, T6, T8 dan T9.
 4. Pastikan semantic highlighting menyala: buka Settings, cari `editor.semanticHighlighting.enabled`, nilainya harus `true` atau `configuredByTheme` (tema ini menyalakannya sendiri).
 5. Untuk memeriksa satu token: taruh kursor di token itu, lalu `Cmd+Shift+P` → **Developer: Inspect Editor Tokens and Scopes**. Kotak yang muncul menampilkan `foreground`, `font style`, daftar `textmate scopes`, dan, kalau language server menyediakannya, `semantic token type` beserta `modifiers`. Baris paling bawah menyebut aturan tema mana yang menang.
 6. Disarankan menyalakan `workbench.editor.highlightModifiedTabs` supaya garis `amber` pada tab yang belum disimpan terlihat.

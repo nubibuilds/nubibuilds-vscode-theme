@@ -6,7 +6,41 @@ Status per 14 November 2026, versi 0.1.0.
 
 **Apa arti `[x]` di sini.** Pemeriksaan otomatis membuktikan empat hal: Color ID-nya ada di tema dan terdaftar di referensi resmi; warna dan gaya huruf tiap kategori syntax serta semantic sama dengan tabel spesifikasi; pasangan warna yang terdaftar memenuhi rasio kontras; dan semua nilai berasal dari palet. Pemeriksaan itu **tidak** membuktikan bahwa hasilnya enak dilihat atau bahwa VS Code benar-benar memakai tiap ID seperti yang diharapkan. Belum ada satu pun bagian yang dilihat dengan mata di Extension Development Host. Karena itu semua baris **Kriteria** yang bersifat visual bertanda `[~]` dan merujuk langkah di `TESTING.md`.
 
-## Ringkasan pemeriksaan otomatis
+## Tiga tema
+
+Spesifikasi awal meminta satu varian. Atas keputusan pemilik proyek, extension sekarang berisi tiga tema gelap dari palet yang sama. Checklist di bawah ditulis untuk **NubiBuilds Dark**; dua tema lain memakai Color ID, aturan token dan warna teks yang sama, dan hanya berbeda pada hal berikut.
+
+| Tema | Bedanya dari NubiBuilds Dark |
+| --- | --- |
+| **NubiBuilds Dark** | Persis spesifikasi: editor `bg`; sidebar, panel, terminal `surface`; activity bar, title bar, status bar, deretan tab `bar`. File temanya identik dengan tag Git `baseline-spec` |
+| **NubiBuilds Dark Void** | Sidebar, panel, terminal, activity bar, title bar, status bar, deretan tab dan tab tidak aktif semuanya `bg`. Widget melayang tetap `surface`. Tab aktif dan tidak aktif berlatar sama; pembedanya garis atas `accent` dan teks yang lebih terang |
+| **NubiBuilds Dark Float** | Editor, gutter, breadcrumb, tab aktif dan minimap memakai `surface`; baris aktif naik ke `hover`. Semua sorotan dilemahkan (tabel di bawah) |
+
+Alpha sorotan di Float, diturunkan supaya komentar di atas sorotan pada baris aktif tetap ≥ 4,5:1:
+
+| Sorotan | Dark dan Void | Float |
+| --- | --- | --- |
+| Seleksi editor dan terminal | 15% | 11,5% |
+| Sorotan kata | 12% | 11% |
+| Match pencarian aktif / lainnya | 17% / 10% | 13% / 8% |
+| Bracket matching | 14% | 11% |
+| Linked editing | 16% | 14% |
+| Snippet tabstop | 14% | 12% |
+| Baris diff + kata | 9% + 6% | 7% + 5% |
+| Baris eksekusi debug | 16% | 13% |
+| Stack frame terfokus, konflik merge | 12% | 11% |
+| Merge editor: perubahan + kata | 10% + 8% | 8% + 6% |
+| Merge editor: perubahan base + kata | 10% + 8% | 9% + 7% |
+| Merge editor: input 1 / input 2 | 14% / 14% | 11% / 12% |
+| Rentang komentar aktif | 14% | 11% |
+
+Seleksi direncanakan 12%, tetapi setelah dibulatkan ke byte hex hasilnya 4,49:1, jadi dipakai 11,5%.
+
+`npm run check` menjalankan kedua pemeriksaan untuk ketiga tema dan gagal kalau salah satunya gagal. Hasil saat ini: ketiganya lulus, 0 kegagalan. Pasangan teks terendah di Float: `dim` di atas sorotan simbol pada baris aktif, 4,51:1.
+
+Belum satu pun dari ketiga tema dinilai tuntas dengan mata. Semua langkah `TESTING.md` berlaku untuk tiap tema; untuk Void dan Float cukup ulangi T1, T3, T6, T8 dan T9, karena hanya latar dan sorotan yang berbeda.
+
+## Ringkasan pemeriksaan otomatis (NubiBuilds Dark)
 
 | Ukuran | Hasil |
 | --- | --- |

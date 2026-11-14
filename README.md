@@ -4,8 +4,16 @@ A dark colour theme for Visual Studio Code with a green-phosphor terminal look:
 a green-tinted dark background, one green accent, and four supporting colours
 that each have a fixed job.
 
-There is one variant: dark (`vs-dark`). There is no light variant and no High
-Contrast variant.
+The extension contains three dark themes that share one palette and differ only
+in how backgrounds are layered:
+
+| Theme | Backgrounds |
+| --- | --- |
+| **NubiBuilds Dark** | The editor is darkest; the side bar, panel and terminal are one step lighter; the bars are a third shade. |
+| **NubiBuilds Dark Void** | Everything uses the darkest background, like a terminal screen. Areas are separated by lines only. |
+| **NubiBuilds Dark Float** | The editor is raised to the side bar's shade. Selection, search and diff highlights are slightly weaker so that comments stay readable on the current line. |
+
+There is no light theme and no High Contrast theme.
 
 ## Palette
 
@@ -38,7 +46,7 @@ code --install-extension nubibuilds-dark-0.1.0.vsix
 ```
 
 Then open the Command Palette, run **Preferences: Color Theme** and choose
-**NubiBuilds Dark**. Or set it in `settings.json`:
+**NubiBuilds Dark**, **NubiBuilds Dark Void** or **NubiBuilds Dark Float**. Or set it in `settings.json`:
 
 ```jsonc
 {
@@ -61,11 +69,13 @@ Then open the Command Palette, run **Preferences: Color Theme** and choose
 
 ## Development
 
-All colours are defined once, in `scripts/build-theme.mjs`. The theme JSON in
-`themes/` is generated; do not edit it by hand.
+All colours are defined once, in `scripts/build-theme.mjs`. The three theme
+files in `themes/` are generated from it; do not edit them by hand. Each
+command below runs for all three themes. To work on one, set `NUBI_VARIANT` to
+`dark`, `void` or `float`.
 
 ```sh
-npm run build     # regenerate themes/nubibuilds-dark-color-theme.json
+npm run build     # regenerate the three files in themes/
 npm run check     # contrast and coverage checks; non-zero exit on failure
 npm run package   # build, check, then create the .vsix
 ```

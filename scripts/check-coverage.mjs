@@ -6,7 +6,22 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { palette as p, THEME_PATH } from './build-theme.mjs';
+import { spawnSync } from 'node:child_process';
+import { palette as p, THEME_PATH, VARIANTS, VARIANT } from './build-theme.mjs';
+
+// Without NUBI_VARIANT, run this check once per theme and fail if any fails.
+if (!process.env.NUBI_VARIANT) {
+  let failed = false;
+  for (const variant of Object.keys(VARIANTS)) {
+    const result = spawnSync(process.execPath, [fileURLToPath(import.meta.url)], {
+      env: { ...process.env, NUBI_VARIANT: variant },
+      stdio: 'inherit',
+    });
+    if (result.status !== 0) failed = true;
+    console.log('');
+  }
+  process.exit(failed ? 1 : 0);
+}
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
@@ -35,7 +50,16 @@ if (theme.semanticHighlighting !== true) fail('Theme file', '"semanticHighlighti
 
 const pkg = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
 const contributed = pkg.contributes?.themes ?? [];
-if (contributed.length !== 1) fail('Manifest', `expected exactly one contributed theme, found ${contributed.length}`);
+const expectedThemes = Object.values(VARIANTS);
+if (contributed.length !== expectedThemes.length) {
+  fail('Manifest', `expected ${expectedThemes.length} contributed themes, found ${contributed.length}`);
+}
+for (const { name, file } of expectedThemes) {
+  if (!contributed.some((entry) => entry.label === name && entry.path === `./themes/${file}`)) {
+    fail('Manifest', `package.json does not contribute "${name}" at ./themes/${file}`);
+  }
+}
+if (theme.name !== VARIANTS[VARIANT].name) fail('Theme file', `"name" should be "${VARIANTS[VARIANT].name}", found "${theme.name}"`);
 for (const entry of contributed) {
   if (entry.uiTheme !== 'vs-dark') fail('Manifest', `uiTheme must be "vs-dark", found "${entry.uiTheme}"`);
   if (!existsSync(resolve(ROOT, entry.path))) fail('Manifest', `theme path does not exist: ${entry.path}`);
@@ -507,7 +531,7 @@ for (const id of unset) {
   unsetByPrefix[prefix] = (unsetByPrefix[prefix] ?? 0) + 1;
 }
 
-console.log('NubiBuilds Dark: coverage check\n');
+console.log(`${theme.name}: coverage check\n`);
 console.log(`  colour IDs set:            ${Object.keys(C).length} (all checked against ${official.count} official IDs, snapshot ${official.fetched})`);
 console.log(`  required IDs checked:      ${requiredCount} across ${Object.keys(required).length} checklist sections`);
 console.log(`  TextMate token rules:      ${rules.length} (${rules.reduce((n, r) => n + [].concat(r.scope).length, 0)} scope selectors)`);

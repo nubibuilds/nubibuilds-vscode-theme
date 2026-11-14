@@ -2,12 +2,25 @@
 // Every colour lives in `palette`; every tunable transparency lives in `alpha`.
 // Run `npm run build` to regenerate themes/nubibuilds-dark-color-theme.json.
 
+import { execFileSync } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-export const THEME_PATH = resolve(ROOT, 'themes/nubibuilds-dark-color-theme.json');
+// Three themes are generated from the same palette. NUBI_VARIANT selects one;
+// running this script without it builds all three.
+//   dark  editor = bg; side bar, panel, terminal = surface; bars = bar
+//   void  every area uses bg (flat, like a terminal screen)
+//   float the editor also uses surface; the current line moves up to hover
+export const VARIANTS = {
+  dark: { name: 'NubiBuilds Dark', file: 'nubibuilds-dark-color-theme.json' },
+  void: { name: 'NubiBuilds Dark Void', file: 'nubibuilds-dark-void-color-theme.json' },
+  float: { name: 'NubiBuilds Dark Float', file: 'nubibuilds-dark-float-color-theme.json' },
+};
+export const VARIANT = process.env.NUBI_VARIANT ?? 'dark';
+if (!(VARIANT in VARIANTS)) throw new Error(`Unknown NUBI_VARIANT "${VARIANT}"`);
+export const THEME_PATH = resolve(ROOT, 'themes', VARIANTS[VARIANT].file);
 
 // ---------------------------------------------------------------------------
 // Palette
@@ -64,11 +77,48 @@ export const alpha = {
   wordHighlight: 0.12,
   find: 0.1,
   findActive: 0.17,
+  bracket: 0.14,
+  linked: 0.16,
+  snippet: 0.14,
   diffLine: 0.09,
   diffText: 0.06, // stacks on top of diffLine
   debugLine: 0.16,
+  focusedFrame: 0.12,
   mergeContent: 0.12,
+  mergeChange: 0.1,
+  mergeChangeWord: 0.08, // stacks on top of mergeChange
+  mergeBase: 0.1,
+  mergeBaseWord: 0.08, // stacks on top of mergeBase
+  mergeInput1: 0.14,
+  mergeInput2: 0.14,
+  commentRange: 0.14,
 };
+
+// Float raises the current line to `hover`, the lightest background, so every
+// layer that can sit on that line is weakened until comments keep 4.5:1.
+if (VARIANT === 'float') {
+  Object.assign(alpha, {
+    selection: 0.115, // 0.12 lands on 4.49:1 once rounded to a hex byte
+    wordHighlight: 0.11,
+    find: 0.08,
+    findActive: 0.13,
+    bracket: 0.11,
+    linked: 0.14,
+    snippet: 0.12,
+    diffLine: 0.07,
+    diffText: 0.05,
+    debugLine: 0.13,
+    focusedFrame: 0.11,
+    mergeContent: 0.11,
+    mergeChange: 0.08,
+    mergeChangeWord: 0.06,
+    mergeBase: 0.09,
+    mergeBaseWord: 0.07,
+    mergeInput1: 0.11,
+    mergeInput2: 0.12,
+    commentRange: 0.11,
+  });
+}
 
 export function withAlpha(hex, a) {
   const byte = Math.round(Math.min(1, Math.max(0, a)) * 255);
@@ -448,7 +498,7 @@ export const workbenchColors = {
     'editor.hoverHighlightBackground': t(p.cyan, 0.12),
     'editor.rangeHighlightBackground': t(p.accent, 0.07),
     'editor.symbolHighlightBackground': t(p.amber, 0.14),
-    'editorBracketMatch.background': t(p.accent, 0.14),
+    'editorBracketMatch.background': t(p.accent, alpha.bracket),
     'editorBracketMatch.border': p.accent,
     'editorLink.activeForeground': p.cyan,
     'editorWhitespace.foreground': p.faint,
@@ -467,8 +517,8 @@ export const workbenchColors = {
     'editorInlayHint.typeBackground': p.hover,
     'editorInlayHint.parameterForeground': p.muted,
     'editorInlayHint.parameterBackground': p.hover,
-    'editor.linkedEditingBackground': t(p.violet, 0.16),
-    'editor.snippetTabstopHighlightBackground': t(p.cyan, 0.14),
+    'editor.linkedEditingBackground': t(p.violet, alpha.linked),
+    'editor.snippetTabstopHighlightBackground': t(p.cyan, alpha.snippet),
     'editor.snippetTabstopHighlightBorder': t(p.cyan, 0.5),
     'editor.snippetFinalTabstopHighlightBorder': p.accent,
     // Must not be opaque; line at 42% over bg composites to ~`hover`.
@@ -633,10 +683,10 @@ export const workbenchColors = {
     'merge.incomingContentBackground': t(p.cyan, alpha.mergeContent),
     'merge.commonHeaderBackground': t(p.violet, 0.3),
     'merge.commonContentBackground': t(p.violet, alpha.mergeContent),
-    'mergeEditor.change.background': t(p.amber, 0.1),
-    'mergeEditor.change.word.background': t(p.amber, 0.08),
-    'mergeEditor.changeBase.background': t(p.coral, 0.1),
-    'mergeEditor.changeBase.word.background': t(p.coral, 0.08),
+    'mergeEditor.change.background': t(p.amber, alpha.mergeChange),
+    'mergeEditor.change.word.background': t(p.amber, alpha.mergeChangeWord),
+    'mergeEditor.changeBase.background': t(p.coral, alpha.mergeBase),
+    'mergeEditor.changeBase.word.background': t(p.coral, alpha.mergeBaseWord),
     'mergeEditor.conflict.unhandledUnfocused.border': t(p.amber, 0.6),
     'mergeEditor.conflict.unhandledFocused.border': p.amber,
     'mergeEditor.conflict.handledUnfocused.border': t(p.accent, 0.4),
@@ -644,8 +694,8 @@ export const workbenchColors = {
     'mergeEditor.conflict.handled.minimapOverViewRuler': p.accent,
     'mergeEditor.conflict.unhandled.minimapOverViewRuler': p.amber,
     'mergeEditor.conflictingLines.background': t(p.violet, 0.14),
-    'mergeEditor.conflict.input1.background': t(p.accent, 0.14),
-    'mergeEditor.conflict.input2.background': t(p.cyan, 0.14),
+    'mergeEditor.conflict.input1.background': t(p.accent, alpha.mergeInput1),
+    'mergeEditor.conflict.input2.background': t(p.cyan, alpha.mergeInput2),
     'inlineEdit.originalBackground': t(p.coral, 0.08),
     'inlineEdit.modifiedBackground': t(p.accent, 0.08),
     'inlineEdit.originalChangedLineBackground': t(p.coral, alpha.diffLine),
@@ -748,7 +798,7 @@ export const workbenchColors = {
     'debugIcon.stopForeground': p.coral,
     'debugIcon.disconnectForeground': p.coral,
     'editor.stackFrameHighlightBackground': t(p.amber, alpha.debugLine),
-    'editor.focusedStackFrameHighlightBackground': t(p.accent, 0.12),
+    'editor.focusedStackFrameHighlightBackground': t(p.accent, alpha.focusedFrame),
     'editor.inlineValuesForeground': p.muted,
     'editor.inlineValuesBackground': p.hover,
     'debugExceptionWidget.background': p.surface,
@@ -996,7 +1046,7 @@ export const workbenchColors = {
     'editorCommentsWidget.resolvedBorder': p.borderStrong,
     'editorCommentsWidget.unresolvedBorder': p.accent,
     'editorCommentsWidget.rangeBackground': t(p.accent, 0.08),
-    'editorCommentsWidget.rangeActiveBackground': t(p.accent, 0.14),
+    'editorCommentsWidget.rangeActiveBackground': t(p.accent, alpha.commentRange),
     'editorCommentsWidget.replyInputBackground': p.bg,
     'markdownAlert.note.foreground': p.cyan,
     'markdownAlert.tip.foreground': p.accent,
@@ -1397,9 +1447,34 @@ export function buildTheme() {
       colors[id] = value;
     }
   }
+  if (VARIANT === 'void') {
+    for (const id of [
+      'sideBar.background', 'sideBarTitle.background', 'sideBarSectionHeader.background', 'sideBarStickyScroll.background',
+      'panel.background', 'panelSectionHeader.background', 'panelStickyScroll.background',
+      'outputView.background', 'outputViewStickyScroll.background',
+      'terminal.background', 'terminalCursor.background', 'terminalStickyScroll.background',
+      // workbench chrome that used `bar`
+      'activityBar.background', 'activityBarTop.background',
+      'titleBar.activeBackground', 'titleBar.inactiveBackground',
+      'statusBar.background', 'statusBar.noFolderBackground',
+      'editorGroupHeader.tabsBackground', 'editorGroupHeader.noTabsBackground',
+      'tab.inactiveBackground', 'tab.unfocusedInactiveBackground',
+    ]) colors[id] = p.bg;
+  }
+  if (VARIANT === 'float') {
+    for (const id of [
+      'editor.background', 'editorGutter.background', 'editorCursor.background', 'breadcrumb.background',
+      'tab.activeBackground', 'tab.activeBorder', 'tab.unfocusedActiveBackground', 'tab.unfocusedActiveBorder',
+      'tab.selectedBackground', 'editorGroup.emptyBackground', 'editorPane.background', 'minimap.background',
+      'editorStickyScroll.background', 'editorStickyScrollGutter.background', 'multiDiffEditor.background',
+      'notebook.editorBackground', 'notebook.outputContainerBackgroundColor', 'welcomePage.background',
+    ]) colors[id] = p.surface;
+    colors['editor.lineHighlightBackground'] = p.hover;
+    colors['editor.inactiveLineHighlightBackground'] = t(p.hover, 0.6);
+  }
   return {
     $schema: 'vscode://schemas/color-theme',
-    name: 'NubiBuilds Dark',
+    name: VARIANTS[VARIANT].name,
     type: 'dark',
     semanticHighlighting: true,
     colors,
@@ -1409,12 +1484,21 @@ export function buildTheme() {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const theme = buildTheme();
-  mkdirSync(dirname(THEME_PATH), { recursive: true });
-  writeFileSync(THEME_PATH, JSON.stringify(theme, null, 2) + '\n');
-  console.log(
-    `Built ${THEME_PATH}\n  ${Object.keys(theme.colors).length} colour IDs, ` +
-      `${theme.tokenColors.length} token rules, ` +
-      `${Object.keys(theme.semanticTokenColors).length} semantic rules`,
-  );
+  if (!process.env.NUBI_VARIANT) {
+    for (const variant of Object.keys(VARIANTS)) {
+      execFileSync(process.execPath, [fileURLToPath(import.meta.url)], {
+        env: { ...process.env, NUBI_VARIANT: variant },
+        stdio: 'inherit',
+      });
+    }
+  } else {
+    const theme = buildTheme();
+    mkdirSync(dirname(THEME_PATH), { recursive: true });
+    writeFileSync(THEME_PATH, JSON.stringify(theme, null, 2) + '\n');
+    console.log(
+      `Built ${theme.name}: ${Object.keys(theme.colors).length} colour IDs, ` +
+        `${theme.tokenColors.length} token rules, ` +
+        `${Object.keys(theme.semanticTokenColors).length} semantic rules`,
+    );
+  }
 }

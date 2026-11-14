@@ -1,7 +1,7 @@
 {
   "name": "nubibuilds-dark",
   "displayName": "NubiBuilds Dark",
-  "description": "A green-phosphor terminal dark theme: one green accent and four supporting colours, each with a fixed job.",
+  "description": "Green-phosphor terminal dark themes: one green accent and four supporting colours, each with a fixed job. Three background treatments.",
   "version": "0.1.0",
   "publisher": "nubibuilds",
   "private": true,
@@ -24,6 +24,16 @@
         "label": "NubiBuilds Dark",
         "uiTheme": "vs-dark",
         "path": "./themes/nubibuilds-dark-color-theme.json"
+      },
+      {
+        "label": "NubiBuilds Dark Void",
+        "uiTheme": "vs-dark",
+        "path": "./themes/nubibuilds-dark-void-color-theme.json"
+      },
+      {
+        "label": "NubiBuilds Dark Float",
+        "uiTheme": "vs-dark",
+        "path": "./themes/nubibuilds-dark-float-color-theme.json"
       }
     ]
   },

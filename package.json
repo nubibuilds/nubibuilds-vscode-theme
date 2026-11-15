@@ -2,11 +2,12 @@
   "name": "nubibuilds-dark",
   "displayName": "NubiBuilds Dark",
   "description": "Green-phosphor terminal dark themes: one green accent and four supporting colours, each with a fixed job. Three background treatments.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "danaharliansyah",
   "author": {
     "name": "Dana Harliansyah"
   },
+  "icon": "images/icon.png",
   "license": "MIT",
   "repository": {
     "type": "git",

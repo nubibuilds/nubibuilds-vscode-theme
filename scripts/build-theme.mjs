@@ -1,6 +1,6 @@
 // Single source of truth for the NubiBuilds Dark theme.
 // Every colour lives in `palette`; every tunable transparency lives in `alpha`.
-// Run `npm run build` to regenerate themes/nubibuilds-dark-color-theme.json.
+// Run `npm run build` to regenerate the three theme files in themes/.
 
 import { execFileSync } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';

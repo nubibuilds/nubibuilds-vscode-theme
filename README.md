@@ -17,6 +17,9 @@ in how backgrounds are layered:
 
 There is no light theme and no High Contrast theme.
 
+Previews in 20 languages, plus the Void and Float variants, are in
+[images/README.md](images/README.md).
+
 ## Palette
 
 | Role | Colour | Used for |
@@ -25,6 +28,7 @@ There is no light theme and no High Contrast theme.
 | Surface | `#0f1511` | Side bar, panel, terminal, floating widgets |
 | Bar | `#111813` | Activity bar, title bar, status bar, tab strip |
 | Text | `#cfdad2` | Default text and variables |
+| Bright text | `#e8f1ea` | Parameters, active and selected UI text |
 | Dim | `#8a9d8f` | Comments, punctuation, secondary text |
 | Accent green | `#62f08f` | Focus, cursor, active indicators, strings, success, added |
 | Amber | `#f0b45a` | Types, warnings, search matches, modified |
@@ -41,10 +45,28 @@ panels carry an accent line; errors and warnings come with icons and squiggles.
 
 ## Install
 
-From a packaged file:
+From the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=danaharliansyah.nubibuilds-dark):
+
+- In VS Code, open the Extensions view (`Ctrl+Shift+X`, or `Cmd+Shift+X` on macOS),
+  search for **NubiBuilds Dark** and click **Install**.
+- Or open Quick Open (`Ctrl+P`, or `Cmd+P` on macOS), paste this command and press
+  Enter:
+
+  ```text
+  ext install danaharliansyah.nubibuilds-dark
+  ```
+
+- Or from a terminal:
+
+  ```sh
+  code --install-extension danaharliansyah.nubibuilds-dark
+  ```
+
+From a packaged file, downloaded from
+[GitHub Releases](https://github.com/nubibuilds/nubibuilds-vscode-theme/releases):
 
 ```sh
-code --install-extension nubibuilds-dark-0.1.0.vsix
+code --install-extension nubibuilds-dark-<version>.vsix
 ```
 
 Then open the Command Palette, run **Preferences: Color Theme** and choose
@@ -60,7 +82,8 @@ Then open the Command Palette, run **Preferences: Color Theme** and choose
 
 ```jsonc
 {
-  // On by default; the theme provides semantic token colours.
+  // The default, "configuredByTheme", already turns this on: the theme enables
+  // semantic highlighting and provides semantic token colours.
   "editor.semanticHighlighting.enabled": true,
   // Six bracket colours taken from the palette.
   "editor.bracketPairColorization.enabled": true,

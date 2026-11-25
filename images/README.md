@@ -13,6 +13,3 @@ by running the sample files through the TextMate grammars that ship with VS
 Code and colouring the tokens with the theme, so the syntax colours match the
 editor. They do not show semantic highlighting, bracket pair colours or the
 rest of the workbench.
-
-To show these in the main README, `package.json` needs a `repository` URL first:
-the packaging tool refuses relative image paths without one.

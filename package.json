@@ -2,7 +2,7 @@
   "name": "nubibuilds-dark",
   "displayName": "NubiBuilds Dark",
   "description": "A green-phosphor terminal dark theme: one green accent and four supporting colours, each with a fixed job. Includes three background variants — Dark, Dark Void and Dark Float — with WCAG-checked contrast and full semantic highlighting.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "danaharliansyah",
   "author": {
     "name": "Dana Harliansyah"

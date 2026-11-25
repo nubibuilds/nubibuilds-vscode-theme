@@ -1,6 +1,6 @@
 # Checklist NubiBuilds Dark
 
-Status per 14 November 2026, versi 0.1.0.
+Status per 26 November 2026, versi 0.1.2.
 
 **Tanda:** `[x]` diimplementasikan, lulus pemeriksaan otomatis, dan (untuk hal yang hanya bisa dinilai dengan mata) lulus uji manual · `[~]` hanya didukung sebagian, atau masih ada keputusan terbuka · `[ ]` belum.
 
@@ -438,9 +438,9 @@ Kriteria:
 - [x] Terminal diuji dengan 16 warna ANSI → T6
 - [x] Explorer, Source Control, Search, Debug dan Problems diuji → T2, T7, T8, T9, T10
 - [x] Popup, dialog, hover, selection dan focus diuji → T11, T12, T14
-- [~] Screenshot dokumentasi dibuat untuk area utama → T15. **Sebagian:** `images/NubiBuilds_Cover.png` (dibuat pemilik proyek) memuat tangkapan layar asli editor dan Explorer untuk ketiga tema, dan menjadi sampul `README.md`. Terminal, Source Control, debug, Command Palette dan diff belum punya tangkapan layar. Selain itu `images/` berisi 22 gambar pratinjau hasil render (20 bahasa di NubiBuilds Dark, ditambah TypeScript di Void dan Float), dibuat dari grammar TextMate bawaan VS Code dan warna tema. Itu bukan tangkapan layar jendela VS Code: tidak memuat semantic highlighting, warna pasangan kurung, maupun workbench (Explorer, terminal, debug, Command Palette, diff). MDX tidak dirender karena VS Code tidak punya grammar bawaannya. Gambar pratinjau itu ada di `images/README.md`, belum di `README.md`
+- [~] Screenshot dokumentasi dibuat untuk area utama → T15. **Sebagian:** `images/NubiBuilds_Cover.png` (dibuat pemilik proyek) memuat tangkapan layar asli editor dan Explorer untuk ketiga tema, dan menjadi sampul `README.md`. Terminal, Source Control, debug, Command Palette dan diff belum punya tangkapan layar. Selain itu `images/` berisi 22 gambar pratinjau hasil render (20 bahasa di NubiBuilds Dark, ditambah TypeScript di Void dan Float), dibuat dari grammar TextMate bawaan VS Code dan warna tema. Itu bukan tangkapan layar jendela VS Code: tidak memuat semantic highlighting, warna pasangan kurung, maupun workbench (Explorer, terminal, debug, Command Palette, diff). MDX tidak dirender karena VS Code tidak punya grammar bawaannya. Gambar pratinjau itu ada di `images/README.md`, dan `README.md` menautkannya
 - [x] README menjelaskan tema dan cara mengaktifkannya
-- [x] Pengemasan VSIX berhasil: `nubibuilds-dark-0.1.0.vsix` (31,2 KB, 8 file, tiga tema), tanpa flag pengecualian. `package.json` punya `repository` (GitHub) dan lisensi MIT (`LICENSE`, field `license`)
+- [x] Pengemasan VSIX berhasil: `nubibuilds-dark-0.1.2.vsix` (45,8 KB, 10 file: tiga tema dan ikon `images/icon.png`), tanpa flag pengecualian. `package.json` punya `repository` (GitHub) dan lisensi MIT (`LICENSE`, field `license`)
 - [x] Extension diuji melalui Extension Development Host → T0
 - [x] Batasan UI extension/webview didokumentasikan
 

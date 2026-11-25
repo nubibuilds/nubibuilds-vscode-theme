@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2 (2026-11-26)
+
+- README: install from the Visual Studio Marketplace (Extensions view, Quick Open
+  or the `code` CLI).
+- README: link the previews, list the bright text colour (`#e8f1ea`) in the
+  palette, and correct the note on `editor.semanticHighlighting.enabled`.
+- Cover: the five dots now show the green accent and the four supporting
+  colours (amber, cyan, coral, violet).
+- The themes are unchanged.
+
 ## 0.1.1 (2026-11-15)
 
 - Add the extension icon.

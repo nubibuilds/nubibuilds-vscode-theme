@@ -299,6 +299,6 @@ Tidak ada date picker bawaan di VS Code, jadi item itu tidak bisa diuji.
 ## T15. Gerbang akhir
 
 1. Ambil screenshot untuk: editor dengan `sample.ts`, Explorer + Source Control (T9), terminal dengan `ansi.sh`, sesi debug, Command Palette, diff editor. Simpan di folder `images/` dan rujuk dari `README.md`.
-2. Kemas: `npm run package` → `nubibuilds-dark-0.1.0.vsix`.
-3. Kalau ingin memasang ke VS Code utama: `code --install-extension nubibuilds-dark-0.1.0.vsix`. Untuk mencopot: `code --uninstall-extension danaharliansyah.nubibuilds-dark`.
+2. Kemas: `npm run package` → `nubibuilds-dark-<versi>.vsix` (versi dari `package.json`).
+3. Kalau ingin memasang ke VS Code utama: `code --install-extension nubibuilds-dark-<versi>.vsix`. Untuk mencopot: `code --uninstall-extension danaharliansyah.nubibuilds-dark`.
 4. Sebelum dipublikasikan: dorong `main` ke GitHub (gambar di `README.md` dirujuk lewat URL repo, jadi baru tampil setelah ada di sana dan repo-nya publik), lalu terbitkan dengan `npx @vscode/vsce login danaharliansyah` dan `npx @vscode/vsce publish`. ID `publisher` di `package.json` adalah `danaharliansyah`. Galeri di `images/README.md` boleh dipindahkan ke `README.md`.

@@ -1,0 +1,43 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+
+      # The files in themes/ are generated; they must match the build script.
+      - name: Build themes
+        run: npm run build
+
+      - name: Generated themes are up to date
+        run: |
+          if ! git diff --exit-code -- themes/; then
+            echo "::error::themes/ is out of date. Run 'npm run build' and commit the result."
+            exit 1
+          fi
+
+      - name: Contrast and coverage checks
+        run: npm run check
+
+      - name: Package
+        run: npx --yes @vscode/vsce package --out nubibuilds-dark.vsix
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: vsix
+          path: nubibuilds-dark.vsix
+          retention-days: 14

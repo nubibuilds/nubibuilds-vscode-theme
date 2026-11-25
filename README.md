@@ -107,6 +107,11 @@ npm run package   # build, check, then create the .vsix
 
 No dependencies are installed. Packaging downloads `@vscode/vsce` through `npx`.
 
+GitHub Actions runs the same steps on every push to `main` and on every pull
+request ([.github/workflows/check.yml](.github/workflows/check.yml)). The run
+also fails if the files in `themes/` do not match `npm run build`, and it keeps
+the packaged `.vsix` as a downloadable artifact for 14 days.
+
 To try the theme without installing it, open this folder in VS Code and press
 `F5` (**Run Extension**). An Extension Development Host opens on the `samples/`
 folder, which has one realistic file per supported language.
